@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: const_size
+Version: 0.0.1a0
+Author: Ярыкин Евгений
+License-Expression: Zlib
+Project-URL: source, https://github.com/ZedZhenOS/const_size
+Classifier: Private :: Do Not Upload
+Requires-Python: >=3.12
+License-File: LICENSE
+Requires-Dist: typing-extensions~=4.14
+Provides-Extra: dev
+Requires-Dist: build==1.5.*; extra == "dev"
+Requires-Dist: endstone-stubgen==0.1.1; extra == "dev"
+Dynamic: license-file
