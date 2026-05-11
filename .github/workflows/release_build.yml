@@ -13,8 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-14]
-#        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-15-intel, macos-14]
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-15-intel, macos-14]
 
     steps:
       - uses: actions/checkout@v6
@@ -63,8 +62,6 @@ jobs:
         run: echo "value=`basename ${{ github.repository }}`" >> $GITHUB_OUTPUT
         shell: bash
 
-      - run: ls -lah --color -R .
-
       - name: Upload files to server
         uses: wangyucode/sftp-upload-action@v3
         with:
@@ -75,5 +72,3 @@ jobs:
           localDir: ./dist/
           remoteDir: ${{ secrets.UPLOAD_DIR }}/${{ steps.repo-basename.outputs.value }}/${{ github.event.release.tag_name }}_${{ github.run_id }}_${{ github.run_attempt }}
           forceUpload: true
-
-      - run: ls -lah --color -R .
