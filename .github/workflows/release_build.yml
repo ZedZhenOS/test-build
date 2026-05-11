@@ -71,5 +71,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           privateKey: ${{ secrets.SSH_KEY }}
           localDir: ./dist/
-          remoteDir: ${{ secrets.UPLOAD_DIR }}/${{ steps.repo-basename.outputs.value }}/${{ github.run_id }}_${{ github.run_attempt }}
+          remoteDir: ${{ secrets.UPLOAD_DIR }}/${{ steps.repo-basename.outputs.value }}/${{ github.event.release.tag_name }}_${{ github.run_id }}_${{ github.run_attempt }}
           forceUpload: true
