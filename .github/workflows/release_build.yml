@@ -4,68 +4,12 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-14]
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v3.4.1
-        
-      - uses: actions/upload-artifact@v7
-        with:
-          name: wheels-${{ matrix.os }}
-          path: ./wheelhouse/*.whl
-          retention-days: 1
-
-  build_bdist_and_upload:
-    name: Build tar.gz and upload
-    runs-on: ubuntu-latest
-    needs: build_wheels
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.14'
-
-      - run: pip install build -U
-      - run: python -m build -s
-
-      - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v5
-        with:
-          path: ./dist/
-
-      - name: Add file to release
-        uses: cssnr/upload-release-action@v1
-        with:
-          globs: |
-            ./dist/*.whl
-            ./dist/*.tar.gz
-
-      - id: repo-basename
-        run: echo "value=`basename ${{ github.repository }}`" >> $GITHUB_OUTPUT
-        shell: bash
-
-      - name: Upload files to server
-        uses: wangyucode/sftp-upload-action@v3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          privateKey: ${{ secrets.SSH_KEY }}
-          localDir: ./dist/
-          remoteDir: ${{ secrets.UPLOAD_DIR }}/${{ steps.repo-basename.outputs.value }}/${{ github.event.release.tag_name }}_${{ github.run_id }}_${{ github.run_attempt }}
-          forceUpload: true
+  call-workflow-passing-data:
+    uses: ZedZhenOS/workflows/.github/workflows/release_build.yml@main
+    with:
+      tag_name: github.event.release.tag_name
+    secrets: inherit
