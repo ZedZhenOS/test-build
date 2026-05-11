@@ -52,7 +52,10 @@ jobs:
         with:
           path: ./dist/
 
-      - run: ll -R .
+      - run: ls -lah --color -R .
+      - run: mv ./dist/wheels-*/* ./dist
+      - run: rm -r ./dist/wheels-*/
+      - run: ls -lah --color -R .
 
       - name: Add file to release
         uses: cssnr/upload-release-action@v1
@@ -71,6 +74,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSWORD }}
-          source: dist/*
+          source: dist/
           destination: ~/pypi_upload/${{ steps.repo-basename.outputs.value }}/${{ github.run_id }}_${{ github.run_attempt }}
