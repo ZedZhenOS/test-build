@@ -58,6 +58,9 @@ jobs:
           globs: |
             ./dist/*.whl
             ./dist/*.tar.gz
+      - id: repo-basename
+        run: echo "value=`basename ${{ github.repository }}`" >> $GITHUB_OUTPUT
+        shell: bash
 
       - name: Upload files to server
         uses: kellydc/sshft@v1
@@ -68,4 +71,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSWORD }}
           source: dist/*
-          destination: ~/pypi_upload/${{ github.run_id }}/
+          destination: ~/pypi_upload/${{ steps.repo-basename.outputs.value }}/${{ github.run_id }}_${{ github.run_attempt }}
