@@ -64,11 +64,12 @@ jobs:
         shell: bash
 
       - name: Upload files to server
-        uses: kellydc/sshft@v1
+        uses: wangyucode/sftp-upload-action@v3
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: dist/
-          destination: ~/pypi_upload/${{ steps.repo-basename.outputs.value }}/${{ github.run_id }}_${{ github.run_attempt }}
+          privateKey: ${{ secrets.SSH_KEY }}
+          localDir: ./dist/
+          remoteDir: ~/pypi_upload/${{ steps.repo-basename.outputs.value }}/${{ github.run_id }}_${{ github.run_attempt }}
+          forceUpload: true
