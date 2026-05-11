@@ -52,17 +52,13 @@ jobs:
         with:
           path: ./dist/
 
-      - run: ls -lah --color -R .
-      - run: mv ./dist/wheels-*/* ./dist
-      - run: rm -r ./dist/wheels-*/
-      - run: ls -lah --color -R .
-
       - name: Add file to release
         uses: cssnr/upload-release-action@v1
         with:
           globs: |
             ./dist/*.whl
             ./dist/*.tar.gz
+
       - id: repo-basename
         run: echo "value=`basename ${{ github.repository }}`" >> $GITHUB_OUTPUT
         shell: bash
