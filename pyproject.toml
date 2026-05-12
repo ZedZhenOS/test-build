@@ -18,7 +18,7 @@ classifiers = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "typing-extensions~=4.14",
+    "typing-extensions~=4.15",
 ]
 
 [project.optional-dependencies]
