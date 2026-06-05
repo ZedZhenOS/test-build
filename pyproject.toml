@@ -28,8 +28,8 @@ dev = [
 ]
 
 [dependency-groups]
-dev = [
-    "build==1.4.0",
+devd = [
+    "sphinx==8.0.0",
 ]
 
 [project.urls]
