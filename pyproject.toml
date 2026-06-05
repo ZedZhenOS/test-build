@@ -29,7 +29,7 @@ dev = [
 
 [dependency-groups]
 devd = [
-    "sphinx==8.0.0",
+    "sphinx==9.1.0",
 ]
 
 [project.urls]
