@@ -8,5 +8,5 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "17 22 * * *"
+      cronjob: "22 18 * * *"
       timezone: "Europe/Moscow"
