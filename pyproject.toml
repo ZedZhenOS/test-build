@@ -23,7 +23,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "build==1.5.*",
+    "build==1.6.*",
     "endstone-stubgen==0.1.1",
 ]
 
